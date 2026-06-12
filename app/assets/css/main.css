@@ -1,0 +1,221 @@
+@import "tailwindcss";
+
+* {
+  font-family: "Inter", sans-serif;
+}
+
+/* Убираем границы у scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 6px;
+  border: none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+/* Кастомная иконка resize для textarea */
+textarea::-webkit-resizer {
+  border: none;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    transparent 40%,
+    #000000 40%,
+    #000000 45%,
+    transparent 45%,
+    transparent 55%,
+    #000000 55%,
+    #000000 60%,
+    transparent 60%
+  );
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  cursor: nwse-resize;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(45deg);
+  }
+  to {
+    transform: rotate(405deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Кастомные стили для prose (markdown контент) */
+.prose {
+  color: #374151;
+  max-width: none;
+}
+
+.prose h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.prose h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.prose h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.prose p {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  line-height: 1.75;
+}
+
+.prose ul,
+.prose ol {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.prose ul {
+  list-style-type: disc;
+}
+
+.prose ol {
+  list-style-type: decimal;
+}
+
+.prose li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: list-item;
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
+.prose hr {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border-color: #e5e7eb;
+}
+
+.prose a {
+  color: #10b981;
+  text-decoration: underline;
+}
+
+.prose a:hover {
+  color: #059669;
+}
+
+html,
+body {
+  background-color: #ffffff;
+}
+
+button,
+input,
+a {
+  cursor: pointer;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.5 9.5l5.5 5 5.5-5' stroke='%23121417' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-position: right 18px center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  padding-right: 3rem !important;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+/* Подчеркивание только для текстовых ссылок внутри параграфов */
+p a,
+li a,
+td a,
+th a,
+.prose a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+
+p a:hover,
+li a:hover,
+td a:hover,
+th a:hover,
+.prose a:hover {
+  text-decoration: none;
+}

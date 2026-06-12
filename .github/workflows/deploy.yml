@@ -1,0 +1,40 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main # триггер — пуш в main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: Production
+
+    steps:
+      - name: SSH и деплой
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm use 24
+            git config --global --add safe.directory /var/www/rs-platform
+            cd /var/www/rs-platform
+            git fetch origin main
+            git reset --hard origin/main
+            git clean -fd
+            LOCK_HASH="$(sha256sum package-lock.json | awk '{print $1}')"
+            CACHE_DIR="/var/cache/rs-platform"
+            CACHE_LOCK="$CACHE_DIR/package-lock.sha256"
+            if [ ! -d node_modules ] || [ ! -f "$CACHE_LOCK" ] || [ "$(cat "$CACHE_LOCK")" != "$LOCK_HASH" ]; then
+              npm ci
+              mkdir -p "$CACHE_DIR"
+              printf '%s' "$LOCK_HASH" > "$CACHE_LOCK"
+            else
+              npm run postinstall --if-present
+            fi
+            NODE_OPTIONS="--max-old-space-size=1536" npm run build
+            pm2 restart rocketseven-site --update-env
