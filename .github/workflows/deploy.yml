@@ -37,4 +37,9 @@ jobs:
               npm run postinstall --if-present
             fi
             NODE_OPTIONS="--max-old-space-size=1536" npm run build
-            pm2 restart rocketseven-site --update-env
+            if pm2 describe rocketseven-site >/dev/null 2>&1; then
+              PORT=3001 pm2 restart rocketseven-site --update-env
+            else
+              PORT=3001 pm2 start .output/server/index.mjs --name rocketseven-site --update-env
+            fi
+            pm2 save
